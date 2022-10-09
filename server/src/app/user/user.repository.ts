@@ -7,7 +7,7 @@ import {FindUserDto} from "@app/user/dtos/find-user.dto";
 export class UserRepository extends Repository {
   async create(user: UserDto) {
     return this.session.run(
-      "CREATE (u:User {name: $name, email: $email, password: $password, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt})",
+      "CREATE (u:User {uuid: $uuid, name: $name, email: $email, password: $password, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt})",
       {
         uuid: uuid4(),
         ...user,

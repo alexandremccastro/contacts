@@ -1,17 +1,19 @@
 import 'module-alias/register'
-import 'dotenv/config'
+
+
 import express, { Express } from 'express'
 
 import routes from "./routes";
+import { APP_PORT } from "@core/helper/constants";
 
 const app: Express = express()
-
-const APP_PORT = process.env.APP_PORT || 3000
+app.use(express.json())
 
 routes.map((route) => {
   app.use(route.path, route.handler)
 })
 
-app.listen(APP_PORT, () => {
+app.listen(APP_PORT, async () => {
+
   console.log("App is running on port:", APP_PORT)
 })

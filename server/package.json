@@ -1,0 +1,29 @@
+{
+  "name": "Contacts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A managing app that helps users organize their contacts",
+  "main": "src/index.ts",
+  "author": "Alexandre Castro",
+  "license": "MIT",
+  "scripts": {
+    "serve": "nodemon --watch src/ src/index.ts"
+  },
+  "_moduleAliases": {
+    "@app": "dist/src/app",
+    "@core": "dist/src/core"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "module-alias": "^2.2.2",
+    "neo4j-driver": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.8.3",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}

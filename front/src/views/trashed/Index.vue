@@ -9,13 +9,25 @@
       :items="contacts"
       :items-per-page="pagination.perPage"
     >
+      <template v-slot:[`item.firstName`]="{ item }">
+        <Ellipsis :data="item.firstName" />
+      </template>
+
+      <template v-slot:[`item.phoneNumber`]="{ item }">
+        <Ellipsis :data="item.phoneNumber" />
+      </template>
+
+      <template v-slot:[`item.email`]="{ item }">
+        <Ellipsis :data="item.email" />
+      </template>
       <template v-slot:[`item.createdAt`]="{ item }">
-        {{ item.createdAt | formatDate }}
+        <Ellipsis :data="item.createdAt | formatDate" />
       </template>
 
       <template v-slot:[`item.updatedAt`]="{ item }">
-        {{ item.updatedAt | formatDate }}
+        <Ellipsis :data="item.updatedAt | formatDate" />
       </template>
+
       <template v-slot:[`item.actions`]="{ item }">
         <v-btn icon color="success" @click="confirmDelete(item)">
           <v-icon>mdi-arrow-u-left-top</v-icon>
@@ -38,6 +50,7 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import Ellipsis from "@/components/Ellipsis";
 export default {
   name: "RecentIndex",
   data() {
@@ -48,6 +61,10 @@ export default {
       },
       page: 1,
     };
+  },
+
+  components: {
+    Ellipsis
   },
 
   computed: {

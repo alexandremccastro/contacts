@@ -24,15 +24,15 @@
       </template>
 
       <v-list>
-        <v-list-item>
-          <v-list-item-title>TEste</v-list-item-title>
+        <v-list-item @click="attemptLogout">
+          <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
   </v-app-bar>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import {mapActions, mapMutations} from "vuex";
 
 export default {
   name: "AppBar",
@@ -40,6 +40,27 @@ export default {
     ...mapMutations({
       toggleDrawer: "template/TOGGLE_DRAWER"
     }),
+
+    ...mapActions({
+      logout: 'auth/logout',
+      showSnackbar: "snackbar/showSnackbar",
+    }),
+
+    async attemptLogout() {
+      try {
+        await this.logout();
+
+        this.showSnackbar({
+          message: "Logged out success.",
+        });
+      } catch (error) {
+        this.showSnackbar({
+          message: "Unexpected error.",
+        });
+      } finally {
+        this.$router.push({ name: "Login" });
+      }
+    },
 
     changeTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark

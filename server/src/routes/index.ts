@@ -3,7 +3,7 @@ import contact from "./contact";
 
 export default [
   {
-    path: "/auth",
+    path: "/",
     handler: auth,
   },
   {

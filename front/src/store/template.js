@@ -16,12 +16,6 @@ export default {
           route: { name: 'Contacts' }
         },
         {
-          type: "menu",
-          title: "Recent",
-          icon: 'mdi-history',
-          route: { name: 'Recent' }
-        },
-        {
           type: "divider",
         },
         {

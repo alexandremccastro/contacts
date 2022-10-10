@@ -1,22 +1,27 @@
-import Vue from "vue"
-import Vuex from "vuex"
-import { createLogger } from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
+import { createLogger } from "vuex";
 
 // Application modules
-import contact from "./contact"
-import template from "./template"
+import dialog from "./dialog";
+import snackbar from "./snackbar";
+import contact from "./contact";
+import template from "./template";
+import auth from "./auth";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-const debug = process.env.VUE_APP_ENV !== 'production'
+const debug = process.env.VUE_APP_ENV !== "production";
 
 export default new Vuex.Store({
   modules: {
+    dialog,
+    snackbar,
+    auth,
     contact,
-    template
+    template,
   },
 
   strict: debug,
-  plugins:  debug ? [createLogger({})] : []
-})
-
+  plugins: debug ? [createLogger({})] : [],
+});

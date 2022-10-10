@@ -43,7 +43,11 @@ export class ContactService {
     return this.contactRepository.deleteOne(uuid);
   }
 
-  async paginate(page: number, perPage: number, userUUID: string) {
-    return this.contactRepository.paginate(page, perPage, userUUID)
+  async undeleteOne(uuid: string) {
+    return this.contactRepository.undeleteOne(uuid);
+  }
+
+  async paginate(page: number, perPage: number, userUUID: string, trashed = false) {
+    return this.contactRepository.paginate(page, perPage, userUUID, trashed)
   }
 }

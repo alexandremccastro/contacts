@@ -6,7 +6,7 @@ export class RegisterValidator extends BaseValidator {
 
   rules(): any {
     return object({
-      name: string().max(100).required(),
+      name: string().required(),
       email: string()
         .required()
         .test({
@@ -17,13 +17,7 @@ export class RegisterValidator extends BaseValidator {
             return !found;
           },
         }),
-      password: string().min(8).required(),
-      password_confirmation: string()
-        .oneOf(
-          [ref("password"), null],
-          "Password confirmation doesn't match password."
-        )
-        .required(),
+      password: string().required()
     });
   }
 }

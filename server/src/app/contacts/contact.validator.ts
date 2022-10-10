@@ -5,13 +5,13 @@ export class ContactValidator extends BaseValidator {
 
   rules(): any {
     return object({
-      firstName: string().max(100).required(),
-      lastName: string().max(100).nullable().default(''),
-      company: string().max(100).nullable().default(''),
-      jobTitle: string().max(100).nullable().default(''),
-      email: string().max(100).nullable().default(''),
-      phoneNumber: string().max(100).required(),
-      notes: string().max(100).nullable().default(''),
+      firstName: string().required(),
+      lastName: string().nullable().default(''),
+      company: string().nullable().default(''),
+      jobTitle: string().nullable().default(''),
+      email: string().nullable().default(''),
+      phoneNumber: string().required(),
+      notes: string().nullable().default(''),
     });
   }
 }

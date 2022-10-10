@@ -39,8 +39,8 @@ export class AuthController extends BaseController {
     try {
       const validator = new RegisterValidator();
       const validated = await validator.validate(req.body);
-      const data = this.userService.create(validated);
-      return res.status(200).send(data);
+      await this.userService.create(validated);
+      return res.status(200).send();
     } catch (error) {
       return this.dispatchError(res, error);
     }

@@ -53,6 +53,16 @@ export class ContactRepository extends Repository {
     );
   }
 
+  async undeleteOne(uuid: string) {
+    return this.session.run(
+      "MATCH (c:Contact {uuid: $uuid }) SET c.deletedAt = $deletedAt RETURN c",
+      {
+        uuid,
+        deletedAt: null,
+      }
+    );
+  }
+
   async belongsToUser(userUUID: string, contactUUID: string) {
     return this.session.run(
       "MATCH (u:User {uuid: $userUUID})<-[:BELONGS]-(c:Contact {uuid: $contactUUID}) RETURN c",
@@ -63,21 +73,22 @@ export class ContactRepository extends Repository {
     );
   }
 
-  async findUserContacts(userUUID: string, perPage: number, skip: number) {
+  async findUserContacts(userUUID: string, perPage: number, skip: number, trashed = false) {
     return this.session.run(
-      `MATCH (u:User {uuid: $userUUID})<-[:BELONGS]-(c:Contact) RETURN c SKIP ${skip} LIMIT ${perPage}`,
+      `MATCH (u:User {uuid: $userUUID})<-[:BELONGS]-(c:Contact) 
+              WHERE ${ trashed ? '' : 'NOT'} EXISTS(c.deletedAt) RETURN c SKIP ${skip} LIMIT ${perPage}`,
       {
         userUUID,
       }
     );
   }
 
-  async paginate(page = 1, perPage = 10, userUUID: string) {
+  async paginate(page = 1, perPage = 10, userUUID: string, trashed = false) {
     const skip = (page - 1) * perPage;
     const res = await this.session.run(
       `MATCH (u:User {uuid: $userUUID})
               <-[:BELONGS]-(c:Contact) 
-              RETURN COUNT(c) as cnt`,
+              WHERE ${ trashed ? '' : 'NOT' } EXISTS(c.deletedAt) RETURN c`,
       {
         userUUID,
       }
@@ -85,14 +96,15 @@ export class ContactRepository extends Repository {
 
     const total = res.records.length;
     const lastPage = Math.ceil(total / perPage);
-    const results = await this.findUserContacts(userUUID, perPage, skip);
+    const results = await this.findUserContacts(userUUID, perPage, skip, trashed);
 
     return {
       data: results.records.map((r) => r.get("c").properties),
-      pagination: {
+      meta: {
         page,
         perPage,
         lastPage,
+        total
       },
     };
   }

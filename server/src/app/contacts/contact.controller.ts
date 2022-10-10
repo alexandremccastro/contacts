@@ -22,8 +22,8 @@ export class ContactController extends BaseController {
     try {
       const { user } = req as any;
       const searchValidator = new SearchValidator()
-      const {page, perPage }  = await searchValidator.validate(req.query)
-      const data = await this.contactService.paginate(page, perPage, user.uuid);
+      const {page, itemsPerPage, trashed }  = await searchValidator.validate(req.query)
+      const data = await this.contactService.paginate(page, itemsPerPage, user.uuid, trashed);
       return res.status(200).send(data);
     } catch (error) {
       return this.dispatchError(res, error);
@@ -47,7 +47,6 @@ export class ContactController extends BaseController {
       const { user } = req as any;
       const { uuid } = req.params;
 
-      console.log(user.uuid, uuid);
       if (!(await this.contactService.belongsToUser(user.uuid, uuid)))
         throw new NotFoundError("Not found.");
       const data = await this.contactService.findOne(req.params);
@@ -65,6 +64,16 @@ export class ContactController extends BaseController {
       const { uuid } = req.params;
       const data = this.contactService.updateOne(uuid, validated);
       return res.status(200).send(data);
+    } catch (error) {
+      return this.dispatchError(res, error);
+    }
+  }
+
+  async undelete(req: Request, res: Response) {
+    try {
+      const { uuid } = req.params;
+      await this.contactService.undeleteOne(uuid);
+      return res.status(200).send();
     } catch (error) {
       return this.dispatchError(res, error);
     }

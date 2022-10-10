@@ -1,8 +1,6 @@
 
 import { Router } from "express";
 import { AuthController } from "@app/auth/auth.controller";
-import { UserService } from "@app/user/user.service";
-import { UserRepository } from "@app/user/user.repository";
 import auth from '@core/middleware/auth.middleware'
 
 const authRouter: Router = Router()

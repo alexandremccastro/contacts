@@ -1,19 +1,17 @@
-import 'module-alias/register'
+import "module-alias/register";
 
-
-import express, { Express } from 'express'
+import express, { Express } from "express";
 
 import routes from "./routes";
 import { APP_PORT } from "@core/helper/constants";
 
-const app: Express = express()
-app.use(express.json())
+const app: Express = express();
+app.use(express.json());
 
 routes.map((route) => {
-  app.use(route.path, route.handler)
-})
+  app.use(route.path, route.handler);
+});
 
 app.listen(APP_PORT, async () => {
-
-  console.log("App is running on port:", APP_PORT)
-})
+  console.log("App is running on port:", APP_PORT);
+});

@@ -1,8 +1,7 @@
-
-import { v4 as uuid4 } from 'uuid'
+import { v4 as uuid4 } from "uuid";
 import { Repository } from "@core/database/repository";
 import { UserDto } from "@app/user/dtos/user.dto";
-import {FindUserDto} from "@app/user/dtos/find-user.dto";
+import { FindUserDto } from "@app/user/dtos/find-user.dto";
 
 export class UserRepository extends Repository {
   async create(user: UserDto) {

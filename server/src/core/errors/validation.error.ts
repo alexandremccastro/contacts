@@ -1,11 +1,10 @@
-
-import {BaseError} from "@core/errors/base.error";
+import { BaseError } from "@core/errors/base.error";
 
 export class ValidationError extends BaseError {
   params: {};
 
   constructor(message: string, params: any) {
-    super(message);
+    super(message, 422);
     this.params = params;
   }
 }

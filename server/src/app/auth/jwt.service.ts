@@ -1,10 +1,9 @@
-
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "@core/helper/constants";
 
 export class JwtService {
   sign(params: any) {
-    return jwt.sign(params, JWT_SECRET)
+    return jwt.sign(params, JWT_SECRET);
   }
 
   verify(token: string) {

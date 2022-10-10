@@ -18,7 +18,7 @@
             </template>
 
             <template v-for="submenu in item.items">
-              <v-list-item @click="submenu.action" :key="submenu.title">
+              <v-list-item @click="showWarning" :key="submenu.title">
                 <v-list-item-icon>
                   <v-icon>{{ submenu.icon }}</v-icon>
                 </v-list-item-icon>
@@ -36,7 +36,7 @@
   </v-navigation-drawer>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 
 export default  {
   name: "SideBar",
@@ -53,6 +53,20 @@ export default  {
     ...mapMutations({
       toggleDrawer: "template/TOGGLE_DRAWER"
     }),
+
+    ...mapActions({
+      displayDialog: 'dialog/displayDialog'
+    }),
+
+    showWarning() {
+      this.displayDialog({
+        color: "danger",
+        title: "Invalid Operation",
+        type: "info",
+        text: `This feature is not available yet.`,
+        callback: this.attemptDelete,
+      });
+    }
   }
 }
 </script>

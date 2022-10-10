@@ -1,28 +1,21 @@
 <template>
   <v-app>
-    <AppBar />
-    <SideBar />
+    <router-view />
 
-
-    <v-main app>
-      <v-container fluid>
-          <router-view />
-      </v-container>
-    </v-main>
+    <DisplaySnackbar />
+    <DisplayDialog />
   </v-app>
 </template>
 
 <script>
-import SideBar from "@/components/SideBar";
-import AppBar from "@/components/AppBar";
+import DisplayDialog from "@/components/DisplayDialog";
+import DisplaySnackbar from "@/components/DisplaySnackbar";
 
 export default {
   name: 'App',
-
   components: {
-    SideBar,
-    AppBar
-  },
-
+    DisplayDialog,
+    DisplaySnackbar
+  }
 };
 </script>
